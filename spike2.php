@@ -1,3 +1,4 @@
+<!-- PHP block to test the connection from the page to the database: The message "TEST: Connected to DB server succesfully should appear at the very top of the webpage if the connection test is successful" -->
 <?php
 //Turn on error reporting
 ini_set('display_errors', 'On');
@@ -8,12 +9,14 @@ if($mysqli->connect_errno){
   }
   echo "TEST: Connected to DB server successfully!";
 ?>
+
 <!DOCTYPE html>
 <html>
 
+<!--The head of our HTML file includes the CSS style sheet --> 
 <head>
 
-    <title>E-commerce and Philanthropy Platform (SPIKE DEMO)</title>
+    <title>E-commerce and Philanthropy Platform (DEMO)</title>
 
     <style type="text/css">
 
@@ -28,27 +31,34 @@ if($mysqli->connect_errno){
         }
 
         h1{
-            font-size: 36px;
+            font-size: 32px;
             max-width: 30%;
-            text-shadow: 0px 2px 1px black;
+            padding: 4px;
+            text-shadow: 0px 1px 1px black;
             display: inline;
-            border-bottom-color: lightpink;
-            border-bottom-width: 5px;
-            border-bottom-style: dashed;
+            border-bottom-color: lightblue;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
         }
 
         h2{
            color: #2d8730;
-            font-size: 28px;
+            font-size: 22px;
             max-width: 30%;
-            text-shadow: 0px 1px 1px lightpink;
+            text-shadow: 0px 1px 1px lightblue;
             display: inline;
-            border-bottom-color: lightpink;
-            border-bottom-width: 2px;
-            border-bottom-style: dashed;
-            border-left-color: lightpink;
-            border-left-width: 2px;
-            border-left-style: dashed;
+            padding: 4px;
+           
+            
+        }
+
+        h3{
+            color: #2d8730;
+            font-size: 18px;
+            max-width: 30%;
+            
+            display: inline;
+      
         }
 
         a {
@@ -72,12 +82,13 @@ if($mysqli->connect_errno){
             font-size: 80%;
             width: 100%;
             margin: 0;
-            background-color: #e8f0ff;
-            text-align:center;
+            background-color: #e6f6f7;
+            text-align: center;
         }
 
         #page{
             margin: 50px;
+            background-color: white;
 
         }
       
@@ -104,6 +115,12 @@ if($mysqli->connect_errno){
        nav {
             display: inline-block;
             text-align:center;
+            background-color: lightblue;
+            width: 100%;
+            background-image: url(http://gift-of-life.org/wp-content/uploads/2014/06/header-background-2.jpg);
+            background-repeat: repeat-y;
+            background-size: 100%;
+            background-position: center;
         }
 
         nav ul li{
@@ -113,8 +130,8 @@ if($mysqli->connect_errno){
 
         nav ul li a {
             display: inline-block;
-            padding: 22px;
-            background-color: lightpink;
+            padding: 14px;
+            background-color: lightgreen;
             color: black;
             box-shadow: 0px 3px 3px #999;
             margin: 5px auto 5px auto;
@@ -122,7 +139,7 @@ if($mysqli->connect_errno){
             font-size: 14px;
             text-decoration: none;
             text-transform:uppercase;
-            border-radius: 30px;
+            border-radius: 20px;
         }
 
         nav ul li a:hover{
@@ -142,7 +159,7 @@ if($mysqli->connect_errno){
         }
 
         .user_timeline{
-            background-color: #caf2bf;
+            background-color: white;
             text-size: 40px;
             font: sans-serif;
             color: #5e002d;
@@ -153,39 +170,55 @@ if($mysqli->connect_errno){
             margin: 20px;
             text-align: right;
             text-transform: uppercase;
-            color: lightcoral;
+            color: black;
+            background-image: url(http://gift-of-life.org/wp-content/uploads/2014/06/header-background-2.jpg);
+            background-repeat: repeat-y;
+            background-size: 100%;
+            background-position: center;
         }
 		
-		
-		table.grid {
+        table{
+            width: 50%;
+            
+        }
+
+	   table.grid {
 		font-family: verdana,arial,sans-serif;
-		font-size:18px;
+		font-size: 12px;
 		color:#333333;
 		border-width: 1px;
 		border-color: #666666;
 		border-collapse: collapse;
-		margin: 10px auto;
+        margin: 4px auto 4px auto;
 	}
+
 	table.grid th {
-		border-width: 1px;
-		padding: 8px;
+		border-width: 2px;
+		padding: 6px;
 		border-style: solid;
 		border-color: #666666;
-		background-color: #dedede;
+		background-color: #86f4e6;
+        
 	}
+
 	table.grid td {
 		border-width: 1px;
-		padding: 8px;
+		padding: 4px;
 		border-style: solid;
 		border-color: #666666;
 		background-color: #ffffff;
 		width: 20%;
+        
 	}
+
+    caption{
+        font-size: 10px;
+        color: grey;
+    }
 
     </style>
 
 </head>
-
 <!-- webpage content goes in the body -->
 <body>
 
@@ -202,6 +235,7 @@ if($mysqli->connect_errno){
             <li><a href="/settings">Account Settings</a></li>
             <li><a href="/donationHistory">Donation History</a></li>
             <li><a href="/search">Search</a></li>
+            <!-- The actual number of notifications will be loaded from the database. 2 is just included for testing look and feel -->
             <li><a href="/notifications"><b>Notifications (2)</b></a></li>
 
         </ul>
@@ -219,8 +253,8 @@ if($mysqli->connect_errno){
     <ul>
         <!--This section will need code included to retrieve donation history data from the "Donation_History" table -->
    
-	<h3>RECENT DONATION HISTORY:</h3>
-		<table class="grid">
+	<h3>RECENT DONATIONS:</h3>
+		<table class="grid" id="RecentDonations">
 			<caption><b>Donated Items</b></caption>
 			<tr>
 				<th>Organization</th>
@@ -229,6 +263,7 @@ if($mysqli->connect_errno){
                 <th>Donor</th>
 			</tr>
 
+<!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
 <?php
 $stmt = $mysqli->prepare("SELECT organization.username, don_order. order_date, item.description, donor.username FROM donor INNER JOIN don_order ON donor.id = don_order.don_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN organization ON don_order.org_id = organization.id
 ORDER BY order_date desc LIMIT 7");
@@ -245,22 +280,25 @@ $stmt->close();
 
 		</table>
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-        <!--This section will need code included to retrieve message notifications from the "Donor_Profile" table -->
-   <li> NEW MESSAGES NOTIFICATIONS - LOADED FROM Donor_Profile TABLE </li>
-    </ul></p>
+
+        <!--This section will need PHP statement included to retrieve message notifications from the "Donor_Profile" table, similar to the above table -->
+
+<?php
+//Place holder for code to select recent messages and display in table
+?>
+   <h3>NEW MESSAGES:</h3>
+		<table class="grid" id="NewMessages">
+			<caption><b>Notifications</b></caption>
+			<tr>
+            <th>Message Date</th>
+				<th>From</th>
+                <th>Message</th>
+        
+			</tr>
+			</table>
        </div>
 
+<!-- Credits -->
 <footer>
     For CS 361 Project group 10: Mark Buckner, Kendra Ellis, Jonathan Gamble, Edwin Rubio, and Stuart Sandifer.
 </footer>
