@@ -20,16 +20,13 @@ if($mysqli->connect_errno){
     <title>E-commerce and Philanthropy Platform (DEMO)</title>
 
     <style type="text/css">
-
        div{
            text-align: center;
        }
-
         h1, h2 {
             color: #2d8730;
             margin: 10px auto 10px auto;
         }
-
         h1{
             font-size: 32px;
             max-width: 30%;
@@ -40,7 +37,6 @@ if($mysqli->connect_errno){
             border-bottom-width: 2px;
             border-bottom-style: solid;
         }
-
         h2{
            color: #2d8730;
             font-size: 22px;
@@ -49,14 +45,12 @@ if($mysqli->connect_errno){
             display: inline;
             padding: 4px;
         }
-
         h3{
             color: #2d8730;
             font-size: 18px;
             max-width: 30%;
             display: inline;
         }
-
         hr { 
             display: block;
             margin-top: 0.5em;
@@ -66,23 +60,19 @@ if($mysqli->connect_errno){
             border-width: 2px;
             border-color: lightblue;
         }
-
         a {
             text-decoration: underline;
             color:#db4ce0;
         }
-
         a:hover{
             color:#f46b53;
         }
-
         p{
            font-family: Verdana, "Calibri Light", sans-serif;
             font-size: 14px;
             line-height: 150%;
             text-align: left;
         }
-
         body {
             font-family: arial;
             font-size: 80%;
@@ -91,11 +81,9 @@ if($mysqli->connect_errno){
             background-color: #e6f6f7;
             text-align: center;
         }
-
         #page{
             margin: 50px;
             background-color: white;
-
         }
       
         #image_logo {
@@ -110,14 +98,12 @@ if($mysqli->connect_errno){
             display: block;
             
         }
-
        .content ul{
            text-align: left;
            font-size: 18px;
            text-style: italic;
            font-family: "Cambria Math", Cambria, sans-serif;
        }
-
        nav {
             display: inline-block;
             text-align:center;
@@ -128,12 +114,10 @@ if($mysqli->connect_errno){
             background-size: 100%;
             background-position: center;
         }
-
         nav ul li{
             display: inline-block;
             margin: 5px auto 5px auto;
         }
-
         nav ul li a {
             display: inline-block;
             padding: 14px;
@@ -147,21 +131,17 @@ if($mysqli->connect_errno){
             text-transform:uppercase;
             border-radius: 20px;
         }
-
         nav ul li a:hover{
             background-color: steelblue;
         }
-
         input:hover{
             background-color: steelblue;
         }
-
         p li{
             text-style: italic;
             text-align: left;
             text-size: 20px;
         }
-
         input{
             padding: 14px;
             background-color: lightgreen;
@@ -171,30 +151,25 @@ if($mysqli->connect_errno){
             text-decoration: none;
             border-radius: 20px;
         }
-
         .content {
             background-color: white;
             padding: 20px;
             font-size: 12px;
         }
-
         .user_timeline{
             background-color: white;
             text-size: 40px;
             font: sans-serif;
             color: #5e002d;
         }
-
         .org_stream{
             overflow: auto;
             max-height: 500px;
             background-color: lightblue;
         }
-
         table.stream{
             margin: 4px auto 4px auto;
         }
-
         table.stream td{
             border-width: 1px;
             border-style: solid;
@@ -206,12 +181,9 @@ if($mysqli->connect_errno){
             font-size: 14px;
             font-family: Verdana, Arial, sans-serif;
         }
-
         table.stream img{ 
             padding: 10px;
         }
-
-
         footer {
             border-bottom: 1px #ccc solid;
             margin: 20px;
@@ -223,11 +195,9 @@ if($mysqli->connect_errno){
             background-size: 100%;
             background-position: center;
         }
-
         table{
             width: 50%;
         }
-
 	   table.grid {
 	       font-family: verdana,arial,sans-serif;
 	       font-size: 12px;
@@ -237,7 +207,6 @@ if($mysqli->connect_errno){
 	       border-collapse: collapse;
            margin: 4px auto 4px auto;
 	    }
-
 	   table.grid th {
 	       border-width: 2px;
 	       padding: 6px;
@@ -245,7 +214,6 @@ if($mysqli->connect_errno){
 	       border-color: #666666;
 	       background-color: #86f4e6;    
 	   }
-
 	   table.grid td {
 	       border-width: 1px;
 	       padding: 4px;
@@ -254,12 +222,10 @@ if($mysqli->connect_errno){
 	       background-color: #ffffff;
 	       width: 20%;   
 	   }
-
         caption{
             font-size: 10px;
             color: grey;
         }
-
     #profile-photo{
     background-image: url(https://thumb9.shutterstock.com/display_pic_with_logo/2635591/404348185/stock-photo-earth-day-and-charity-concept-with-green-planet-in-family-volunteer-hands-elements-of-this-image-404348185.jpg);
     background-repeat: no-repeat;
@@ -271,7 +237,6 @@ if($mysqli->connect_errno){
     margin: 0 auto;
     display: block;
     }
-
     #mission-statement{
     font-style: italic;
     text-size: 10px;
@@ -283,12 +248,10 @@ if($mysqli->connect_errno){
     margin: 0 auto;
     padding: 2px;
     }
-
     .test-picture{
     max-width: 80%;
     max-height: 80%;
     }
-
     </style>
 
 </head>
@@ -333,9 +296,25 @@ if($mysqli->connect_errno){
 			<tr>
                 <th>Donation Date</th>
                 <th>Items</th>
-                <th>Donor name</th>
+                <th>Donor Name</th>
 			</tr>
 
+<?php
+$stmt = $mysqli->prepare("SELECT don_order.order_date, item.description, donor.username FROM donor INNER JOIN don_order ON donor.id = don_order.don_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN organization ON don_order.org_id = organization.id
+WHERE organization.id = 2");
+
+$stmt->execute();
+
+$stmt->bind_result($orddate, $item, $donor);
+
+while($stmt->fetch()){
+ echo "<tr>\n<td>\n" . $orddate . "\n</td>\n<td>\n" . $item . "\n</td>\n<td>\n" . $donor . "\n</td>\n</tr>";
+}
+$stmt->close();
+?>
+
+		</table>           
+            
 <!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
 <?php
 /*
