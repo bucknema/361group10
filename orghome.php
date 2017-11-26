@@ -315,7 +315,7 @@ if($mysqli->connect_errno){
     <div class="content">
 
     <!--ORG_NAME will be loaded from the database with a PHP statement -->
-    <h2>Welcome, ORG_NAME</h2>
+    <h2>ORG_NAME</h2>
 
     <!-- Profile photo will be loaded from the database with a PHP statement -->
     <div id="profile-photo"></div>           
@@ -338,12 +338,14 @@ if($mysqli->connect_errno){
 
 <!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
 <?php
+/*
 $stmt = $mysqli->prepare();
 $stmt->execute();
 $stmt->bind_result();
 while($stmt->fetch()){
 }
 $stmt->close();
+*/
 ?>
 
 		</table>
@@ -362,12 +364,14 @@ $stmt->close();
 
 <!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
 <?php
+/*
 $stmt = $mysqli->prepare();
 $stmt->execute();
 $stmt->bind_result();
 while($stmt->fetch()){
 }
 $stmt->close();
+*/
 ?>
 			</table>
        </div>
@@ -414,12 +418,14 @@ $stmt->close();
 
 <!-- The following block of PHP code selects the most recent org stream posts and displays them in the table by descending date order -->
 <?php
+/*
 $stmt = $mysqli->prepare();
 $stmt->execute();
 $stmt->bind_result();
 while($stmt->fetch()){
 }
 $stmt->close();
+*/
 ?>
     </table>
     </div>
