@@ -29,6 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 		echo '<p class="error">Please enter your last name!</p>';
 	}
 	
+	// Check for a user name:
+	if (preg_match ('/^[A-Z \'.-]{2,40}$/i', $trimmed['user_name'])) {
+		$un = mysqli_real_escape_string ($dbc, $trimmed['user_name']);
+	} else {
+		echo '<p class="error">Please enter a user name!</p>';
+	}
+	
 	// Check for an email address:
 	if (filter_var($trimmed['email'], FILTER_VALIDATE_EMAIL)) {
 		$e = mysqli_real_escape_string ($dbc, $trimmed['email']);
@@ -47,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 		echo '<p class="error">Please enter a valid password!</p>';
 	}
 	
-	if ($fn && $ln && $e && $p) { // If everything's OK...
+	if ($fn && $ln && $un && $e && $p) { // If everything's OK...
 
 		// Make sure the email address is available:
 		$q = "SELECT user_id FROM users WHERE email='$e'";
@@ -59,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 			$a = md5(uniqid(rand(), true));
 
 			// Add the user to the database:
-			$q = "INSERT INTO users (email, pass, first_name, last_name, active, registration_date) VALUES ('$e', SHA1('$p'), '$fn', '$ln', '$a', NOW() )";
+			$q = "INSERT INTO users (user_name, email, pass, first_name, last_name, active, registration_date) VALUES ('$un','$e', SHA1('$p'), '$fn', '$ln', '$a', NOW() )";
 			$r = mysqli_query ($dbc, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($dbc));
 
 			if (mysqli_affected_rows($dbc) == 1) { // If it ran OK.
@@ -99,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 	
 	<p><b>Last Name:</b> <input type="text" name="last_name" size="20" maxlength="40" value="<?php if (isset($trimmed['last_name'])) echo $trimmed['last_name']; ?>" /></p>
 
+	<p><b>User Name:</b> <input type="text" name="user_name" size="20" maxlength="40" value="<?php if (isset($trimmed['user_name'])) echo $trimmed['user_name']; ?>" /></p>
+		
 	<p><b>Email Address:</b> <input type="text" name="email" size="30" maxlength="60" value="<?php if (isset($trimmed['email'])) echo $trimmed['email']; ?>" /> </p>
 		
 	<p><b>Password:</b> <input type="password" name="password1" size="20" maxlength="20" value="<?php if (isset($trimmed['password1'])) echo $trimmed['password1']; ?>" /> <small>Use only letters, numbers, and the underscore. Must be between 4 and 20 characters long.</small></p>
