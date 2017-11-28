@@ -300,15 +300,15 @@ if($mysqli->connect_errno){
 			</tr>
 
 <?php
-$stmt = $mysqli->prepare("SELECT don_order.order_date, item.description, donor.username FROM donor INNER JOIN don_order ON donor.id = don_order.don_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN organization ON don_order.org_id = organization.id
+$stmt = $mysqli->prepare("SELECT don_order.order_date, item.description, users.user_name FROM users INNER JOIN don_order ON users.user_id = don_order.user_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN organization ON don_order.org_id = organization.id
 WHERE organization.id = 2");
 
 $stmt->execute();
 
-$stmt->bind_result($orddate, $item, $donor);
+$stmt->bind_result($orddate, $item, $user);
 
 while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $orddate . "\n</td>\n<td>\n" . $item . "\n</td>\n<td>\n" . $donor . "\n</td>\n</tr>";
+ echo "<tr>\n<td>\n" . $orddate . "\n</td>\n<td>\n" . $item . "\n</td>\n<td>\n" . $user . "\n</td>\n</tr>";
 }
 $stmt->close();
 ?>
