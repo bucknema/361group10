@@ -290,7 +290,7 @@ if($mysqli->connect_errno){
     <ul>
         <!--This table displays recent new donations in descending date order. Data is retrieved from the database with PHP below -->
 		<table class="grid" id="donations">
-		<h3 id="DonationsHistory">DONATIONS HISTORY:</h3>
+		<h3 id="DonationsHistory">DONATION HISTORY:</h3>
 		<tr>
                 <th>Donation Date</th>
                 <th>Items</th>
