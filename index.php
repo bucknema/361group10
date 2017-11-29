@@ -5,23 +5,15 @@
 require ('includes/config.inc.php'); 
 
 // Set the page title and include the HTML header:
-$page_title = 'Welcome to this Site!';
+$page_title = 'E-Commerce and Philanthropy Home';
 include ('includes/header.html');
 
 // Welcome the user (by name if they are logged in):
-echo '<h1>Welcome';
-if (isset($_SESSION['first_name'])) {
-	echo ", {$_SESSION['first_name']}";
-}
-echo '!</h1>';
+echo '<h1>Welcome!</h1>';
 ?>
-<p>Spam spam spam spam spam spam
-spam spam spam spam spam spam 
-spam spam spam spam spam spam 
-spam spam spam spam spam spam.</p>
-<p>Spam spam spam spam spam spam
-spam spam spam spam spam spam 
-spam spam spam spam spam spam 
-spam spam spam spam spam spam.</p>
+<p>Donate to Organizations and Charities, or set up
+a need page for an Organization.</p>
+<p>Please use the navigation on the right-side of the
+page to get started!</p>
 
 <?php include ('includes/footer.html'); ?>

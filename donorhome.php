@@ -4,20 +4,19 @@
 ini_set('display_errors', 'On');
 //Connects to the database
 $mysqli = new mysqli("oniddb.cws.oregonstate.edu","ellisken-db","cqs3Ii2O8xoRdNVI","ellisken-db");
-if($mysqli->connect_errno){
+/*if($mysqli->connect_errno){
   echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
   }
   //Should see the message below at the top of the web page if the connection is working
-  echo "TEST: Connected to DB server successfully!";
+  echo "TEST: Connected to DB server successfully!";*/
 ?>
-
 <!DOCTYPE html>
 <html>
 
 <!--The head of our HTML file includes the CSS style sheet --> 
 <head>
 
-    <title>Organization Home</title>
+    <title>Donor Home</title>
 
     <style type="text/css">
        div{
@@ -269,51 +268,48 @@ if($mysqli->connect_errno){
         <ul>
             <li><a href="index.php">Account Settings</a></li>
             <li><a href=#DonationsHistory>Donation History</a></li>
-            <li><a href=#Notifications></b>Notifications (2)</b></a></li><!-- The actual number of notifications will be loaded from the database. 2 is just included for testing look and feel -->
+            <li><a href=#Notifications></b>Notifications (2)</b></a></li>
+<!-- The actual number of notifications will be loaded from the database. 2 is just included for testing look and feel -->
         </ul>
     </nav>
 
 
     <div class="content">
 
-    <!--ORG_NAME will be loaded from the database with a PHP statement -->
-    <h2>Hello, [ORG_NAME]!</h2>
+    <!--DONOR_NAME will be loaded from the database with a PHP statement -->
+    <h2>Hello, [DONOR_NAME]!</h2>
 
     <!-- Profile photo will be loaded from the database with a PHP statement -->
     <div id="profile-photo"></div>           
-    <div id="mission-statement"> ORG_NAME's mission is to provide charitable services to the local population in order to better the community.</div>
-
-
     </div>
    
    <div class="user_timeline">
     <ul>
         <!--This table displays recent new donations in descending date order. Data is retrieved from the database with PHP below -->
 		<table class="grid" id="donations">
-		<h3 id="DonationsHistory">DONATIONS HISTORY:</h3>
+		<h3 id="DonationsHistory">DONATION HISTORY:</h3>
 		<tr>
                 <th>Donation Date</th>
                 <th>Items</th>
-                <th>Donor Name</th>
+                <th>Organization Name</th>
 		</tr>
 
 <?php
-$stmt = $mysqli->prepare("SELECT don_order.order_date, item.description, users.user_name FROM users INNER JOIN don_order ON users.user_id = don_order.user_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN organization ON don_order.org_id = organization.id
-WHERE organization.id = 2");
+$stmt = $mysqli->prepare("SELECT don_order.order_date, item.description, organization.org_name FROM organization INNER JOIN don_order ON organization.id = don_order.org_id INNER JOIN item ON don_order.id = item.order_id INNER JOIN users ON users.user_id = don_order.user_id WHERE users.user_id = 1");
 
 $stmt->execute();
 
-$stmt->bind_result($orddate, $item, $donor);
+$stmt->bind_result($orddate, $item, $orgname);
 
 while($stmt->fetch()){
- echo "<tr>\n<td>\n" . $orddate . "\n</td>\n<td>\n" . $item . "\n</td>\n<td>\n" . $donor . "\n</td>\n</tr>";
+ echo "<tr>\n<td>\n" . $orddate . "\n</td>\n<td>\n" . $item . "\n</td>\n<td>\n" . $orgname . "\n</td>\n</tr>";
 }
 $stmt->close();
 ?>
 
 		</table>           
             
-<!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
+<!-- The following block of PHP code selects the seven most recent donations and displays them in a table by descending date order -->
 <?php
 /*
 $stmt = $mysqli->prepare();
@@ -338,7 +334,7 @@ $stmt->close();
 			</tr>
 
 
-<!-- The following block of PHP code selects the sevent most recent donations and displays them in a table by descending date order -->
+<!-- The following block of PHP code selects the seven most recent donations and displays them in a table by descending date order -->
 <?php
 /*
 $stmt = $mysqli->prepare();
@@ -352,59 +348,6 @@ $stmt->close();
 			</table>
        </div>
 
-    <!--Horizontal rule breaks the page into two sections: new donations/messages to the org, and a stream of posts from the org --> 
-    <hr>
-
-    <!-- The "org stream" is a feature like Facebook's timeline. The organization will be able to post images and text to their public profile page so that visitors can see updates from the org. -->
-    <div class="org_stream">
-    <h2>Post to Your Org Stream</h2>
-
-    <!-- Form to submit text posts and images to the org's stream -->
-    <!-- Not functional. This is an example -->
-    <form action="/streampost.php" method="post">
-    <textarea name="message" rows="5" cols="30" maxlength="240">
-    POST TEXT GOES IN HERE. THIS IS A VISUAL EXAMPLE. POSTS DO NOT CURRENTLY FUNCTION!
-    </textarea>
-    <br>
-    <input type="submit" value="Post">
-    <input name="imageFile" type="file">
-    </form>
-
-        <table class="stream">
-            <caption><b>ORG_NAME's STREAM</b></caption>
-            
-            <tr>
-            <!-- Actual message text and images will be loaded from the database with PHP statements -->
-            <!--This is just an example org stream post: -->             
-            <td><b>11/25/2017</b> <br> <hr>
-            Hello Donors, we wanted to thank you for all your donations!!!
-            <center><img src="https://previews.123rf.com/images/serezniy/serezniy1408/serezniy140802057/30649715-Volunteers-with-donation-box-with-foodstuffs-on-grey-background-Stock-Photo.jpg" class="test-picture"></center>
-            </td>
-            </tr>
-
-            <tr>
-            <!-- Actual message text and images will be loaded from the database with PHP statements -->
-            <!--Another example org stream post: --> 
-            <td><b>11/22/2017</b> <br> <hr>
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            <center><img src="https://previews.123rf.com/images/serezniy/serezniy1308/serezniy130802480/21335615-Donation-box-isolated-on-white-Stock-Photo-clothes-donation-clothing.jpg" class ="test-picture"></center>
-            </td>
-            </tr>
-
-
-<!-- The following block of PHP code selects the most recent org stream posts and displays them in the table by descending date order -->
-<?php
-/*
-$stmt = $mysqli->prepare();
-$stmt->execute();
-$stmt->bind_result();
-while($stmt->fetch()){
-}
-$stmt->close();
-*/
-?>
-    </table>
-    </div>
 
 <!-- Credits -->
 <footer>
