@@ -18,10 +18,10 @@ define('LIVE', FALSE);
 define('EMAIL', 'InsertRealAddressHere');
 
 // Site URL (base for all redirections):
-define ('BASE_URL', 'http://web.engr.oregonstate.edu/~gambljon/cs361/');
+define ('BASE_URL', 'http://web.engr.oregonstate.edu/~ellisken/cs361-project/');
 
 // Location of the MySQL connection script:
-define ('MYSQL', '/nfs/stak/users/gambljon/mysqli_connect.php');
+define ('MYSQL', '/nfs/stak/users/ellisken/public_html/cs361-project/mysqli_connect.php');
 
 // Adjust the time zone for PHP 5.1 and greater:
 date_default_timezone_set ('US/Central');
@@ -71,3 +71,4 @@ set_error_handler ('my_error_handler');
 
 // ************ ERROR MANAGEMENT ************ //
 // ****************************************** //
+
