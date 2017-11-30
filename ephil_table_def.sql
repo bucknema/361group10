@@ -37,6 +37,7 @@ CREATE TABLE organization (
   city VARCHAR(255) NOT NULL,
   state VARCHAR(25) NOT NULL,
   zipcode INT(10) NOT NULL,
+  active CHAR(32),
   access_id VARCHAR(255) NOT NULL,
   access_token VARCHAR(255) NOT NULL,
   PRIMARY KEY  (id)
