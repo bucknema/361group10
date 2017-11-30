@@ -5,14 +5,14 @@ $page_title = 'Change Your Password';
 include ('includes/header.html');
 
 // If no user_id session variable exists, redirect the user:
-if (!isset($_SESSION['user_id'])) {
+/*if (!isset($_SESSION['user_id'])) {
 	
 	$url = BASE_URL . 'index.php'; // Define the URL.
 	ob_end_clean(); // Delete the buffer.
 	header("Location: $url");
 	exit(); // Quit the script.
 	
-}
+}*/
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	require (MYSQL);

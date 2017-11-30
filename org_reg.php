@@ -1,4 +1,4 @@
-<?php # Script 18.6 - register.php
+<?php # Script 18.6 - org_register.php
 // This is the registration page for organizations.
 require ('includes/config.inc.php');
 $page_title = 'Organization Registration';
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 	if (preg_match ('/^[A-Z \'.-]{2,40}$/i', $trimmed['org_name'])) {
 		$on = mysqli_real_escape_string ($dbc, $trimmed['org_name']);
 	} else {
-		echo '<p class="error">Please enter your last name!</p>';
+		echo '<p class="error">Please enter a valid organization name! No special characters please.</p>';
 	}
 	
 	// Check for a user name:
@@ -56,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 			// Create the activation code:
 			$a = md5(uniqid(rand(), true));
 			// Add the user to the database:
-			$q = "INSERT INTO organization (org_name, email, password, username) VALUES ('$on','$e', SHA1('$p'), '$un')";
+			$q = "INSERT INTO organization (org_name, email, password, username, active) VALUES ('$on','$e', SHA1('$p'), '$un', '$a')";
 			$r = mysqli_query ($dbc, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($dbc));
 			if (mysqli_affected_rows($dbc) == 1) { // If it ran OK.
 				// Send the email:
 				$body = "Thank you for registering at <whatever site>. To activate your account, please click on this link:\n\n";
-				$body .= BASE_URL . 'activate.php?x=' . urlencode($e) . "&y=$a";
+				$body .= BASE_URL . 'org_activate.php?x=' . urlencode($e) . "&y=$a";
 				mail($trimmed['email'], 'Registration Confirmation', $body, 'From: admin@sitename.com');
 				
 				// Finish the page:
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 ?>
 	
 <h1>Organization Registration</h1>
-<form action="register.php" method="post">
+<form action="org_reg.php" method="post">
 	<fieldset>
 	
 	<p><b>Organization Name:</b> <input type="text" name="org_name" size="20" maxlength="40" value="<?php if (isset($trimmed['org_name'])) echo $trimmed['org_name']; ?>" /></p>

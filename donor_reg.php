@@ -1,4 +1,4 @@
-<?php # Script 18.6 - register.php
+<?php # Script 18.6 - donor_register.php
 // This is the registration page for the site.
 require ('includes/config.inc.php');
 $page_title = 'Donor Registration';
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 			if (mysqli_affected_rows($dbc) == 1) { // If it ran OK.
 				// Send the email:
 				$body = "Thank you for registering at <whatever site>. To activate your account, please click on this link:\n\n";
-				$body .= BASE_URL . 'activate.php?x=' . urlencode($e) . "&y=$a";
+				$body .= BASE_URL . 'don_activate.php?x=' . urlencode($e) . "&y=$a";
 				mail($trimmed['email'], 'Registration Confirmation', $body, 'From: admin@sitename.com');
 				
 				// Finish the page:
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 ?>
 	
 <h1>Donor Registration</h1>
-<form action="register.php" method="post">
+<form action="donor_reg.php" method="post">
 	<fieldset>
 	
 	<p><b>First Name:</b> <input type="text" name="first_name" size="20" maxlength="20" value="<?php if (isset($trimmed['first_name'])) echo $trimmed['first_name']; ?>" /></p>
