@@ -45,11 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Handle the form.
 	
 	if ($on && $un && $e && $p) { // If everything's OK...
 		// Make sure the email address is available:
-		$q = "SELECT user_id FROM users WHERE email='$e'";
+		$q = "SELECT id FROM organization WHERE email='$e'";
 		$r = mysqli_query ($dbc, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($dbc));
 
 		//Make sure the username is available:
-		$q = "SELECT user_id FROM users WHERE user_name='$un'";
+		$q = "SELECT id FROM organization WHERE username='$un'";
 		$s = mysqli_query($dbc, $q) or trigger_error("Query: $q\n<br />MySQL Error: ". mysqli_error($dbc));		
 	
 		if (mysqli_num_rows($r) == 0 && mysqli_num_rows($s) == 0) { // Available.
